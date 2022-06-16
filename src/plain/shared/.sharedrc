@@ -1,0 +1,48 @@
+{
+  "settings": {
+    "browserSupport": ["> 1%", "not ie 11"],
+    "optimizations": {
+      "css": false,
+      "image": false,
+      "html": false,
+      "js": false
+    },
+    "useOriginalFileNames": true,
+    "entry": {
+      "js": "./script/main.js",
+      "html": "./index.hbs"
+    },
+    "fonts": [
+      {
+        "sources": [
+          "./fonts/OpenSans-Regular.woff",
+          "./fonts/OpenSans-Regular.woff2"
+        ],
+        "subset": {
+          "glyphs": [
+            "content.title"
+          ]
+        }
+      },
+      {
+        "sources": [
+          "./fonts/OpenSans-Bold.woff",
+          "./fonts/OpenSans-Bold.woff2"
+        ],
+        "subset": {
+          "glyphs": [
+            "content.cta"
+          ]
+        }
+      }
+    ]
+  },
+  "content": {
+    "css": "./css/style.css",
+    "clickTag": "https://www.google.com",
+    "title": "Welcome to this Banner!",
+    "logo": "./img/logo.svg",
+    "cta": "CLICK HERE",
+    "bgcolor": "#FFFFFF"
+  }
+}

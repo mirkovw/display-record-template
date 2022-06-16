@@ -1,1 +1,1 @@
-# display-record-template
+# displaymonks-cleanoutput-template
