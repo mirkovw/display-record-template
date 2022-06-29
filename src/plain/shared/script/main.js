@@ -2,6 +2,38 @@
   const config = 'webpackWillReplaceThisWithConfig';
   let timeline;
 
+  function enableAdsRecorder(animation, config) {
+    const animationRecordEvent = new CustomEvent('animation-record');
+    const animationCompleteEvent = new CustomEvent('animation-end');
+
+    document.dispatchEvent(new CustomEvent('animation-info', {
+      'detail': {
+        'duration': animation.duration(),
+        'width': config.settings.size.width,
+        'height': config.settings.size.height,
+      },
+    }));
+
+    document.addEventListener('animation-info-received', function(e) {
+      console.log('Ok the server received the animation info. now start recording');
+
+      animation.pause(0); //start at 0
+      document.dispatchEvent(animationRecordEvent); //send request to record this frame
+
+      document.addEventListener('animation-gotoframe-request', function(e) {
+
+        console.log('animation-gotoframe-request')
+        animation.pause(e.detail/1000);
+
+        if (e.detail/1000 < animation.duration()) {
+          document.dispatchEvent(animationRecordEvent);
+        } else {
+          document.dispatchEvent(animationCompleteEvent);
+        }
+      });
+    });
+  }
+
   const createAnimation = function() {
     const tl = gsap.timeline({paused: true});
 
@@ -28,56 +60,12 @@
 
     timeline = createAnimation();
 
-    this.adsRecorder = new DisplayAdsRecorder();
-    this.adsRecorder.enable(timeline);
+    enableAdsRecorder(timeline, config);
 
     timeline.play();
   }
 
-  class DisplayAdsRecorder {
 
-    constructor() {
-
-    }
-
-    enable(animation) {
-      const animationRecordEvent = new CustomEvent('animation-record');
-      const animationCompleteEvent = new CustomEvent('animation-end');
-
-      document.dispatchEvent(new CustomEvent('animation-info', {
-        'detail': {
-          'duration': animation.duration(),
-          'width': config.settings.size.width,
-          'height': config.settings.size.height,
-        },
-      }));
-
-
-      document.addEventListener('animation-info-received', function(e) {
-        console.log('Ok the server received the animation info. now start recording');
-
-        animation.getTimeline().pause(0); //start at 0
-        document.dispatchEvent(animationRecordEvent); //send request to record this frame
-
-        document.addEventListener('animation-gotoframe-request', function(e) {
-
-          console.log('animation-gotoframe-request')
-          animation.pause(e.detail/1000);
-
-          if (e.detail/1000 < animation.duration()) {
-            document.dispatchEvent(animationRecordEvent);
-          } else {
-            document.dispatchEvent(animationCompleteEvent);
-          }
-        });
-
-        animation.eventCallback('onStart', function() {
-
-        });
-      });
-
-    }
-  }
 
   window.onload = function() {
     init();

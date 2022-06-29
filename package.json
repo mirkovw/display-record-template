@@ -1,5 +1,5 @@
 {
-  "name": "displaymonks-cleanoutput-template",
+  "name": "displaymonks-record-template",
   "version": "1.0.0",
   "description": "",
   "homepage": "",
@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "dds --mode development",
     "build": "dds --mode production",
+    "record": "display-ads-recorder",
     "preview": "display-upload"
   },
   "license": "ISC",
