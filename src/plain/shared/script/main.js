@@ -5,7 +5,7 @@
   function enableAdsRecorder(animation, config) {
     const animationRecordEvent = new CustomEvent('animation-record');
     const animationCompleteEvent = new CustomEvent('animation-end');
-
+    console.log('ads recorder enabled');
     document.dispatchEvent(new CustomEvent('animation-info', {
       'detail': {
         'duration': animation.duration(),
@@ -22,10 +22,10 @@
 
       document.addEventListener('animation-gotoframe-request', function(e) {
 
-        console.log('animation-gotoframe-request')
+        console.log('animation-gotoframe-request', e.detail)
         animation.pause(e.detail/1000);
 
-        if (e.detail/1000 < animation.duration()) {
+        if (e.detail/1000 <= animation.duration()) {
           document.dispatchEvent(animationRecordEvent);
         } else {
           document.dispatchEvent(animationCompleteEvent);

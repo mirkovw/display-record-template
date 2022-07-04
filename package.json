@@ -19,6 +19,7 @@
     "@mediamonks/display-dev-server": "^10.0.0",
     "@mediamonks/display-temple": "^6.2.2",
     "@mediamonks/display-upload": "^1.5.10",
+    "@mediamonks/display-ads-recorder": "^1.0.2",
     "webfontloader": "^1.6.28"
   }
 }
